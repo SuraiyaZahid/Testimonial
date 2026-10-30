@@ -1,0 +1,107 @@
+// Prisma Schema for Testimonial Engine
+// Compliant with SRS Section 3.1 & PRD Modules
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String      @id @default(uuid())
+  email      String      @unique
+  name       String?
+  avatar     String?
+  workspaces Workspace[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model Workspace {
+  id        String   @id @default(uuid())
+  name      String
+  slug      String   @unique
+  ownerId   String
+  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  spaces    Space[]
+  createdAt DateTime @default(now())
+}
+
+model Space {
+  id                String        @id @default(uuid())
+  name              String
+  slug              String        @unique
+  workspaceId       String
+  workspace         Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  customHeader      String?
+  headerTitle       String?       @default("Would you like to give a shoutout for us?")
+  customMessage     String?       @default("We would love to hear your honest feedback. You can record a quick video or drop a few lines!")
+  logoUrl           String?
+  questions         String?       @default("[\"Who are you and what company do you represent?\", \"What problem did our product solve for you?\", \"What is your favorite feature and why?\"]")
+  collectionType    String        @default("ALL") // "ALL", "VIDEO", "TEXT"
+  collectStarRating Boolean       @default(true)
+  theme             String        @default("dark") // "dark", "light"
+  primaryColor      String        @default("#5D5FEF")
+  thankYouTitle     String?       @default("Thank you so much! 🎉")
+  thankYouMessage   String?       @default("Your testimonial means the world to our team. We've received your submission.")
+  redirectUrl       String?
+  maxVideoDuration  Int           @default(180) // 3 minutes in seconds
+  testimonials      Testimonial[]
+  npsResponses      NpsResponse[]
+  caseStudies       CaseStudy[]
+  createdAt         DateTime      @default(now())
+}
+
+model Testimonial {
+  id           String   @id @default(uuid())
+  spaceId      String
+  space        Space    @relation(fields: [spaceId], references: [id], onDelete: Cascade)
+  type         String   @default("TEXT") // "VIDEO" or "TEXT"
+  rating       Int      @default(5)
+  content      String
+  videoUrl     String?
+  videoDuration Int?    // in seconds
+  transcript   String?
+  authorName   String
+  authorEmail  String
+  authorAvatar String?
+  authorTitle  String?
+  authorSocial String?
+  source       String   @default("FORM") // "FORM", "TWITTER", "LINKEDIN", "REDDIT"
+  sourceUrl    String?
+  sentiment    String   @default("POSITIVE") // "POSITIVE", "NEUTRAL", "NEGATIVE"
+  tags         String?  @default("")
+  isFeatured   Boolean  @default(false)
+  isApproved   Boolean  @default(true)
+  createdAt    DateTime @default(now())
+}
+
+model NpsResponse {
+  id          String   @id @default(uuid())
+  spaceId     String
+  space       Space    @relation(fields: [spaceId], references: [id], onDelete: Cascade)
+  score       Int      // 0 - 10
+  category    String   // "PROMOTER" (9-10), "PASSIVE" (7-8), "DETRACTOR" (0-6)
+  feedback    String?
+  authorName  String?
+  authorEmail String?
+  createdAt   DateTime @default(now())
+}
+
+model CaseStudy {
+  id             String   @id @default(uuid())
+  spaceId        String
+  space          Space    @relation(fields: [spaceId], references: [id], onDelete: Cascade)
+  title          String
+  summary        String
+  clientName     String
+  metricsHighlight String?
+  challenge      String
+  solution       String
+  results        String
+  testimonialIds String?
+  createdAt      DateTime @default(now())
+}
