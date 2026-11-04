@@ -140,3 +140,4 @@ export default function CreateSpaceModal({ onClose, onSuccess }: CreateSpaceModa
     </div>
   );
 }
+

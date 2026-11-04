@@ -328,3 +328,4 @@ export default function SpaceSettingsView({ space, onRefresh }: SpaceSettingsVie
     </form>
   );
 }
+

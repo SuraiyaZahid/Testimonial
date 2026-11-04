@@ -54,3 +54,4 @@ export default async function EmbedCarouselPage({ params, searchParams }: Props)
     </div>
   );
 }
+

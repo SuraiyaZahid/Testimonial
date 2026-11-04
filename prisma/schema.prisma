@@ -105,3 +105,4 @@ model CaseStudy {
   testimonialIds String?
   createdAt      DateTime @default(now())
 }
+

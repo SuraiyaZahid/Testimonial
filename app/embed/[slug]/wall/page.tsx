@@ -79,3 +79,4 @@ export default async function EmbedWallPage({ params, searchParams }: Props) {
     </div>
   );
 }
+

@@ -67,3 +67,4 @@ export default async function EmbedBadgePage({ params, searchParams }: Props) {
     </div>
   );
 }
+

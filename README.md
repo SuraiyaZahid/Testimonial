@@ -90,3 +90,4 @@ Open **[http://localhost:3000](http://localhost:3000)** in your browser.
 - `POST /api/v1/ai/transcribe` — Speech-to-text transcription
 - `POST /api/v1/ai/case-study` — Generate AI Case Study
 - `GET /api/v1/embed/:slug` — Lightweight embed payload with CORS (`Access-Control-Allow-Origin: *`)
+

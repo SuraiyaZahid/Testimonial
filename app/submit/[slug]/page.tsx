@@ -23,3 +23,4 @@ export default async function SubmitPage({ params }: Props) {
     </main>
   );
 }
+

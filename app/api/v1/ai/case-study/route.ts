@@ -75,3 +75,4 @@ ${quotes || "Customer satisfaction reached an all-time high."}`;
     );
   }
 }
+

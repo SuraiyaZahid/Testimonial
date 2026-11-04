@@ -90,3 +90,4 @@ export default function StatsOverview({ testimonials, npsResponses }: StatsOverv
     </div>
   );
 }
+
