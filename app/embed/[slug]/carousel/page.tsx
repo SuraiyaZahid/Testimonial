@@ -1,6 +1,8 @@
 import prisma from "@/lib/prisma";
 import WallOfLoveCard from "@/components/widgets/WallOfLoveCard";
 
+export const dynamic = "force-dynamic";
+
 interface Props {
   params: Promise<{ slug: string }>;
   searchParams: Promise<{ theme?: string }>;

@@ -1,6 +1,8 @@
 import prisma from "@/lib/prisma";
 import { Star } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 interface Props {
   params: Promise<{ slug: string }>;
   searchParams: Promise<{ theme?: string }>;

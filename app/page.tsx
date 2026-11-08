@@ -17,18 +17,24 @@ import {
   Globe,
 } from "lucide-react";
 
-export default async function HomePage() {
-  const supaflowSpace = await prisma.space.findUnique({
-    where: { slug: "supaflow" },
-    include: {
-      testimonials: {
-        where: { isFeatured: true },
-        take: 6,
-      },
-    },
-  });
+export const dynamic = "force-dynamic";
 
-  const sampleTestimonials = supaflowSpace?.testimonials || [];
+export default async function HomePage() {
+  let sampleTestimonials: any[] = [];
+  try {
+    const supaflowSpace = await prisma.space.findUnique({
+      where: { slug: "supaflow" },
+      include: {
+        testimonials: {
+          where: { isFeatured: true },
+          take: 6,
+        },
+      },
+    });
+    sampleTestimonials = supaflowSpace?.testimonials || [];
+  } catch (error) {
+    console.warn("Could not query database on home page:", error);
+  }
 
   return (
     <div className="min-h-screen bg-[#0B0F19] text-white selection:bg-indigo-500 selection:text-white">
